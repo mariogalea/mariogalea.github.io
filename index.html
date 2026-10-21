@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mario Galea — CV</title>
+<meta name="description" content="Mario Galea — Head of Quality Assurance | Software Developer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0F1B2D;          /* hero band */
+    --ink-text: #F3F1EC;
+    --ink-muted: #9AA6B8;
+    --accent: #C2187A;      /* magenta (deeper on light backgrounds for legibility) */
+    --on-accent: #FFFFFF;   /* text placed on an accent fill */
+    --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+
+    --bg: #FAF9F6;
+    --surface: #FFFFFF;
+    --text: #16202E;
+    --muted: #5B6472;
+    --line: #E2DFD8;
+    --track: #E9E6DF;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #0A111B; --accent: #F04DAE; --on-accent: #0F1B2D;
+      --bg: #0E141D; --surface: #151D29; --text: #E8ECF1; --muted: #95A0AE; --line: #263142; --track: #222C3A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #0A111B; --accent: #F04DAE; --on-accent: #0F1B2D;
+    --bg: #0E141D; --surface: #151D29; --text: #E8ECF1; --muted: #95A0AE; --line: #263142; --track: #222C3A;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 14px/1.55 "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  a { color: inherit; text-decoration: none; }
+  a:hover { text-decoration: underline; text-decoration-color: var(--accent); }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; }
+
+  .cv { max-width: 1040px; margin: 0 auto; background: var(--bg); }
+
+  /* ───────── Hero ───────── */
+  .hero {
+    background: var(--ink);
+    color: var(--ink-text);
+    padding: 44px 48px 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after { /* faint grid texture */
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size: 24px 24px;
+    mask-image: linear-gradient(to left, #000 0%, transparent 70%);
+  }
+  .hero-top { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; position: relative; z-index: 1; }
+  .photo-wrap { position: relative; width: 132px; height: 132px; }
+  .photo-wrap::before {
+    content: ""; position: absolute; inset: -8px -8px 8px 8px;
+    border: 2px solid var(--accent); border-radius: 50%;
+  }
+  .photo { position: relative; display: block; width: 132px; height: 132px; border-radius: 50%; object-fit: cover; }
+
+  h1 {
+    margin: 0;
+    font: 700 52px/1 "Space Grotesk", "Inter", sans-serif;
+    letter-spacing: -0.035em;
+  }
+  .title { margin-top: 8px; font: 500 18px/1.3 "Space Grotesk", "Inter", sans-serif; color: var(--ink-text); opacity: .92; }
+  .title span { color: var(--accent); padding: 0 4px; }
+  .quote {
+    margin-top: 14px; max-width: 560px;
+    padding-left: 14px; border-left: 2px solid var(--accent);
+    color: var(--ink-muted); font-size: 14px;
+  }
+
+  /* one row, spread evenly across the hero width */
+  .contacts { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 28px; margin-top: 26px; position: relative; z-index: 1; font-size: 13px; }
+  .contacts li { display: flex; align-items: center; gap: 7px; color: var(--ink-text); }
+  .contacts svg { width: 15px; height: 15px; flex: none; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Career span bar */
+  .span { margin-top: 26px; position: relative; z-index: 1; }
+  /* year ticks: left = months since Nov 2005 / 252 total months */
+  .ticks { position: relative; height: 13px; margin-bottom: 9px; font-size: 10px; line-height: 13px; color: var(--ink-muted); }
+  .ticks span { position: absolute; top: 0; transform: translateX(-50%); }
+  .ticks span::after {
+    content: ""; position: absolute; left: 50%; top: 100%; margin-top: 2px;
+    width: 1px; height: 5px; background: color-mix(in srgb, var(--ink-text) 30%, transparent);
+  }
+  .ticks .hl { color: var(--accent); }
+  .bar {
+    display: grid;
+    /* months per segment: Melita, BMIT, GFI, DNXCORP, Vodafone, GiG, Bally's, GiG */
+    grid-template-columns: 22fr 20fr 55fr 17fr 18fr 29fr 74fr 17fr;
+    gap: 3px;
+  }
+  .seg { height: 8px; border-radius: 2px; background: color-mix(in srgb, var(--ink-text) 28%, transparent); }
+  .seg.lead { background: color-mix(in srgb, var(--accent) 70%, transparent); }
+  .seg.now { background: var(--accent); }
+  .bar-labels { margin-top: 6px; }
+  .bar-labels span { font-size: 10px; color: var(--ink-muted); white-space: nowrap; overflow: visible; }
+  .bar-labels .hl { color: var(--ink-text); }
+
+  /* ───────── Body ───────── */
+  .body { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 44px; padding: 36px 48px 56px; }
+
+  .label {
+    display: flex; align-items: center; gap: 10px;
+    margin: 0 0 16px;
+    font: 500 12px/1 "JetBrains Mono", ui-monospace, monospace;
+    color: var(--accent); letter-spacing: .02em;
+  }
+  .label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* Pipeline */
+  .pipeline { position: relative; padding-left: 30px; }
+  .pipeline::before {
+    content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--line) 30%);
+  }
+  .stage { position: relative; margin-bottom: 22px; break-inside: avoid; }
+  .stage:last-child { margin-bottom: 0; }
+  .node {
+    position: absolute; left: -30px; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--muted);
+  }
+  .stage.now .node { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .stage.lead .node { background: var(--text); border-color: var(--text); }
+
+  .when {
+    display: inline-block;
+    font: 500 11px/1 "JetBrains Mono", ui-monospace, monospace;
+    color: var(--muted); background: var(--track);
+    padding: 4px 7px; border-radius: 4px; margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .stage.now .when { background: var(--accent); color: var(--on-accent); }
+  h3 { margin: 0; font: 600 17px/1.25 "Space Grotesk", "Inter", sans-serif; letter-spacing: -0.01em; }
+  .org { margin: 2px 0 8px; font-size: 13.5px; font-weight: 500; color: var(--muted); }
+  .org b { color: var(--text); font-weight: 600; }
+  /* one-line role heading: Title · Company · Team, each a lighter shade */
+  .stage > .when { display: table; }
+  .stage > h3, .stage > .org { display: inline; }
+  .stage > .org { margin: 0; font-size: 14px; font-weight: 500; color: var(--muted); }
+  .stage > .org::before { content: "|"; padding: 0 8px; color: var(--accent); font-weight: 300; }
+  .stage > .org b { color: color-mix(in srgb, var(--text) 70%, var(--muted)); font-style: italic; }
+  .stage > .points, .stage > .roles { margin-top: 8px; }
+
+  .points li { position: relative; padding-left: 16px; margin: 3px 0; }
+  .points li::before { content: ""; position: absolute; left: 2px; top: .62em; width: 6px; height: 2px; background: var(--accent); }
+
+  /* Company group with multiple roles */
+  .roles { border-left: 2px solid color-mix(in srgb, var(--accent) 40%, var(--line)); margin-left: 2px; padding-left: 16px; }
+  .role + .role { margin-top: 16px; }
+  /* long multi-role entries may span a page break; each role stays whole */
+  .stage.split { break-inside: auto; }
+  .role { break-inside: avoid; position: relative; }
+  /* role marker, sitting on the inner company line beside each role */
+  .promo {
+    position: absolute; left: -22px; top: 5px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 0 3px var(--bg);
+  }
+  .role h4 { margin: 0 0 4px; font: 600 15px/1.3 "Space Grotesk", "Inter", sans-serif; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; }
+  .role h4 .when { margin: 0; }
+
+  /* Key results callout */
+  .results {
+    margin-top: 12px; padding: 14px 16px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    break-inside: avoid;
+  }
+  .results-tag { font: 600 10.5px/1 "JetBrains Mono", ui-monospace, monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .stat { padding: 0; }
+  .stat-k { font: 600 10.5px/1.2 "JetBrains Mono", ui-monospace, monospace; color: var(--muted); letter-spacing: .04em; }
+  .stat-v { font: 700 24px/1.15 "Space Grotesk", "Inter", sans-serif; letter-spacing: -0.02em; margin: 3px 0 2px; white-space: nowrap; color: var(--accent); }
+  .stat-v .arrow { font-weight: 500; padding: 0 3px; }
+  .impact { display: flex; gap: 8px; margin-top: 6px; font-size: 13px; }
+  .impact::before { content: "▲"; color: var(--accent); font-size: 9px; line-height: 2.1; flex: none; }
+
+  /* Earlier roles */
+  .earlier-mark { font: 500 11px/1 "JetBrains Mono", ui-monospace, monospace; color: var(--muted); margin: 26px 0 14px; }
+  .pipeline .earlier-line { position: absolute; left: 6px; width: 2px; }
+  .stage.compact h3 { font-size: 15px; }
+  /* earlier roles: title · company on one line, date on the right */
+  .stage.compact .when { float: right; margin: 0 0 0 10px; }
+  .stage.compact .points { margin-top: 4px; clear: both; }
+  .stage.compact .points li { font-size: 13px; }
+
+  /* Off duty */
+  .offduty { break-inside: avoid; }
+  .hobbies { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .hobby { display: flex; gap: 11px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+  .hobby svg { width: 20px; height: 20px; flex: none; margin-top: 1px; stroke: var(--accent); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .hobby b { display: block; font: 600 14px/1.3 "Space Grotesk", "Inter", sans-serif; margin-bottom: 2px; }
+  .hobby span { display: block; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+
+  /* Rail */
+  aside > section + section { margin-top: 44px; }
+  .skills li { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; font-size: 13px; margin-bottom: 7px; }
+  .sublabel {
+    display: flex; align-items: center; gap: 8px;
+    margin: 14px 0 9px;
+    font: 500 10.5px/1 "JetBrains Mono", ui-monospace, monospace;
+    color: var(--muted); letter-spacing: .04em;
+  }
+  .sublabel::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .label + .sublabel { margin-top: 0; }
+  .meter { display: flex; gap: 3px; }
+  .meter i { width: 16px; height: 6px; border-radius: 2px; background: var(--track); }
+  .meter i.on { background: var(--accent); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+  .langs li { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 7px; }
+  .langs small { font-size: 11px; color: var(--muted); margin-left: 6px; }
+  .dots { display: flex; gap: 4px; }
+  .dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--track); }
+  .dots i.on { background: var(--accent); }
+  /* education & references: one entry per row, separated by hairlines */
+  .edu li, .refs li { padding: 9px 0; border-top: 1px solid var(--line); }
+  .edu li:first-child, .refs li:first-child { border-top: 0; padding-top: 0; }
+  .edu li { font-size: 13px; line-height: 1.4; break-inside: avoid; }
+  .edu b { display: block; font-weight: 600; }
+  .edu span { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .refs li { font-size: 13px; line-height: 1.4; break-inside: avoid; }
+  .refs b { display: block; font-weight: 600; }
+  .refs span { display: block; color: var(--muted); font-size: 12px; }
+  .refs a { font: 500 12px/1.5 "JetBrains Mono", ui-monospace, monospace; color: var(--accent); }
+
+  /* Print / save-as-PDF button (screen only) */
+  .print-btn {
+    position: fixed; right: 20px; bottom: 20px; z-index: 10;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px; border: 0; border-radius: 999px; cursor: pointer;
+    background: var(--accent); color: var(--on-accent);
+    font: 600 13px/1 "Inter", system-ui, sans-serif;
+    box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  }
+  .print-btn:hover { filter: brightness(1.08); }
+  .print-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  .print-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ───────── Mobile ───────── */
+  @media screen and (max-width: 760px) {
+    .hero { padding: 32px 16px 24px; }
+    .hero-top { grid-template-columns: 1fr; gap: 22px; }
+    .photo-wrap, .photo { width: 104px; height: 104px; }
+    h1 { font-size: 40px; }
+    .title { font-size: 16px; }
+    .bar-labels { display: none; }
+    .ticks span:nth-child(even) { display: none; }
+    .body { grid-template-columns: minmax(0, 1fr); padding: 28px 16px 48px; gap: 36px; }
+    .contacts { display: grid; grid-template-columns: minmax(0, 1fr); }
+    .contacts li { min-width: 0; overflow-wrap: anywhere; }
+    .stats { grid-template-columns: 1fr; }
+  }
+
+  /* ───────── Print (A4, 2 pages) ───────── */
+  @media print {
+    /* page 1 bleeds the hero to the top edge; later pages get a safe top margin */
+    @page { size: A4; margin: 10mm 0 9mm; }
+    @page :first { margin: 0 0 9mm; }
+    /* footer on every printed page */
+    @page {
+      @bottom-left { content: "Mario Galea · Curriculum Vitae"; padding-left: 12mm; font: 7px "Inter", sans-serif; color: #8A929E; }
+      @bottom-right { content: "Page " counter(page) " of " counter(pages); padding-right: 12mm; font: 7px "Inter", sans-serif; color: #8A929E; }
+    }
+    .print-btn { display: none; }
+    :root, :root[data-theme="dark"], :root:not([data-theme="light"]) {
+      /* print always uses the light, printer-friendly theme */
+      --ink: #0F1B2D; --accent: #C2187A; --on-accent: #FFFFFF;
+      --bg: #FFFFFF; --surface: #FFFFFF; --text: #16202E; --muted: #555E6B; --line: #E2DFD8; --track: #ECE9E2;
+    }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    html, body { background: var(--bg); }
+    body { font-size: 10px; line-height: 1.36; }
+    .cv { max-width: none; }
+    a:hover { text-decoration: none; }
+
+    .hero { padding: 8mm 12mm 6mm; }
+    .hero-top { gap: 8mm; }
+    .photo-wrap, .photo { width: 27mm; height: 27mm; }
+    .photo-wrap::before { inset: -2mm -2mm 2mm 2mm; }
+    h1 { font-size: 36px; }
+    .title { font-size: 13px; margin-top: 5px; }
+    .quote { font-size: 10.5px; margin-top: 8px; max-width: 120mm; }
+    .contacts { font-size: 9.5px; margin-top: 5mm; gap: 4px 6mm; }
+    .contacts svg { width: 11px; height: 11px; }
+    .span { margin-top: 5mm; }
+    .ticks { font-size: 7px; height: 9px; line-height: 9px; margin-bottom: 6px; }
+    .ticks span::after { height: 3px; margin-top: 1.5px; }
+    .seg { height: 6px; }
+    .bar-labels span { font-size: 7.5px; }
+
+    .body { grid-template-columns: minmax(0, 1fr) 54mm; gap: 9mm; padding: 7mm 12mm 0; }
+    .label { font-size: 9px; margin-bottom: 9px; }
+    .pipeline { padding-left: 22px; }
+    .pipeline::before { left: 4px; }
+    .node { left: -22px; width: 11px; height: 11px; top: 2px; }
+    .stage { margin-bottom: 16px; }
+    /* let long roles continue onto the next page so page 1 is filled; keep bullets whole */
+    .role { break-inside: auto; }
+    .points li { break-inside: avoid; }
+    .when { font-size: 8.5px; padding: 3px 5px; margin-bottom: 4px; }
+    h3 { font-size: 13px; }
+    .org { font-size: 10px; margin-bottom: 4px; }
+    .stage > .org { font-size: 10.5px; margin: 0; }
+    .stage > .org::before { padding: 0 5px; }
+    .stage > .points, .stage > .roles { margin-top: 4px; }
+    .points li { margin: 1.5px 0; padding-left: 12px; }
+    .roles { padding-left: 11px; }
+    .promo { left: -16px; top: 4px; width: 8px; height: 8px; box-shadow: 0 0 0 2px var(--bg); }
+    .role + .role { margin-top: 11px; }
+    .role h4 { font-size: 11.5px; margin-bottom: 2px; }
+    .results { margin-top: 7px; padding: 8px 10px; border-radius: 7px; }
+    .results-tag { font-size: 8px; margin-bottom: 6px; }
+    .stats { gap: 7px; margin-bottom: 6px; }
+    .stat-k { font-size: 8px; }
+    .stat-v { font-size: 17px; }
+    .impact { font-size: 10px; margin-top: 3px; }
+    .earlier-mark { font-size: 8.5px; margin: 8px 0 6px; }
+    .stage.compact h3 { font-size: 12px; }
+    .stage.compact .points { margin-top: 2px; }
+    .stage.compact .points li { font-size: 9.5px; }
+    .hobbies { gap: 4px; }
+    .hobby { padding: 5px 9px; gap: 7px; border-radius: 7px; }
+    .hobby svg { width: 14px; height: 14px; }
+    .hobby b { font-size: 11px; }
+    .hobby span { font-size: 9.5px; line-height: 1.4; }
+    .page-break { break-before: page; }
+
+    aside > section + section { margin-top: 6mm; }
+    aside > section.page-break { margin-top: 0; }
+    .skills li { font-size: 10px; margin-bottom: 6px; }
+    .sublabel { font-size: 8px; margin: 11px 0 7px; }
+    .chips { gap: 5px; }
+    /* page-1 rail: spread stack / soft skills / languages down the page */
+    aside > section:nth-child(2), aside > section:nth-child(3) { margin-top: 12mm; }
+    .meter i { width: 11px; height: 5px; }
+    .chips { gap: 4px; }
+    .chips span { font-size: 9px; padding: 2px 7px; }
+    .langs li { font-size: 10px; margin-bottom: 4px; }
+    .langs small { font-size: 8.5px; }
+    .dots i { width: 6px; height: 6px; }
+    .edu li, .refs li { font-size: 10px; padding: 4px 0; }
+    .edu li:first-child, .refs li:first-child { padding-top: 0; }
+    .edu span, .refs span { font-size: 9px; }
+    .refs a { font-size: 9px; }
+    h3, h4, .label { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" type="button" onclick="window.print()" aria-label="Print or save as PDF">
+  <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
+  Print / Save PDF
+</button>
+<div class="cv">
+
+  <header class="hero">
+    <div class="hero-top">
+      <div class="photo-wrap"><img class="photo" src="photo.png" alt="Mario Galea"></div>
+      <div>
+        <h1>Mario Galea</h1>
+        <p class="title">Head of Quality Assurance<span>/</span>Software Developer</p>
+        <p class="quote">Software Developer in Quality Assurance roles with 17+ years of experience in Test Automation and QA Leadership.</p>
+      </div>
+    </div>
+
+    <ul class="contacts">
+      <li><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:mario.galea84@gmail.com">mario.galea84@gmail.com</a></li>
+      <li><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg><a href="https://www.linkedin.com/in/mario-galea-84140529/">linkedin.com/in/mario-galea-84140529</a></li>
+      <li><svg viewBox="0 0 24 24"><path d="M9 19c-4 1.5-4-2-6-2.5M15 21v-3.5a3 3 0 0 0-.9-2.4c3-.3 6-1.4 6-6.5a5 5 0 0 0-1.4-3.5 4.6 4.6 0 0 0-.1-3.5s-1.1-.3-3.6 1.4a12.4 12.4 0 0 0-6.4 0C6.1 1.3 5 1.6 5 1.6a4.6 4.6 0 0 0-.1 3.5A5 5 0 0 0 3.5 8.6c0 5 3 6.2 6 6.5a3 3 0 0 0-.9 2.4V21"/></svg><a href="https://github.com/mariogalea">github.com/mariogalea</a></li>
+      <li><svg viewBox="0 0 24 24"><path d="M4 14v6h15v-6"/><path d="M8 17h7M8.3 13.6l6.9 1.2M9.3 9.9l6.4 2.6M11.2 6.5l5.6 4M14.2 3.4l4 5.4"/></svg><a href="https://stackoverflow.com/users/2991566/mario-galea">stackoverflow.com/users/2991566</a></li>
+    </ul>
+
+    <div class="span" aria-label="Career timeline from 2005 to present">
+      <div class="ticks mono" aria-hidden="true">
+        <span style="left:0.79%">2006</span><span style="left:5.56%">2007</span><span style="left:10.32%">2008</span><span style="left:15.08%">2009</span><span style="left:19.84%">2010</span><span style="left:24.60%">2011</span><span style="left:29.37%">2012</span><span style="left:34.13%">2013</span><span style="left:38.89%">2014</span><span style="left:43.65%">2015</span><span style="left:48.41%">2016</span><span style="left:53.17%">2017</span><span style="left:57.94%">2018</span><span style="left:62.70%">2019</span><span style="left:67.46%">2020</span><span style="left:72.22%">2021</span><span style="left:76.98%">2022</span><span style="left:81.75%">2023</span><span style="left:86.51%">2024</span><span style="left:91.27%">2025</span><span class="hl" style="left:96.03%">2026</span>
+      </div>
+      <div class="bar">
+        <i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg"></i><i class="seg lead"></i><i class="seg now"></i>
+      </div>
+      <div class="bar-labels bar mono">
+        <span>Melita</span><span>BMIT</span><span>GFI Software</span><span>DNXCORP</span><span>Vodafone</span><span>GiG</span><span class="hl">Bally's Interactive</span><span class="hl">GiG</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="body">
+    <main>
+      <h2 class="label">// experience</h2>
+      <div class="pipeline">
+
+        <article class="stage now">
+          <span class="node"></span>
+          <span class="when">JUN 2025 — PRESENT</span>
+          <h3>Head of Quality Assurance</h3>
+          <p class="org"><b>Gaming Innovation Group</b> · Operations</p>
+          <ul class="points">
+            <li>Developed and manage the overarching Test Strategy, enforcing quality standards and alignment across all Scrum teams through Quality Decision Records (QDRs).</li>
+            <li>Spearhead the integration of agentic AI technologies into the QA pipeline to optimise testing capabilities and drive automation.</li>
+            <li>Direct post-incident problem management, utilising root cause analysis (RCA) to implement systemic safeguards that prevent production defects from recurring.</li>
+            <li>Architected and maintain a robust UI Automation framework that continuously monitors and validates the availability of critical user journeys (e.g., user authentication, game launches) across live iGaming platforms.</li>
+            <li>Partner with Service Operations to systematically scale test coverage and streamline the quality assurance process for newly onboarded brands.</li>
+          </ul>
+          <div class="results">
+            <p class="results-tag">Key results</p>
+            <p class="impact"><span><b>Ways of working:</b> revived Behaviour-Driven Development (BDD), with 4 of 12 Scrum teams now writing BDD scenarios in Jira stories.</span></p>
+            <p class="impact"><span><b>One testing solution:</b> delivered a single, shared solution for testing game launches, bridging engineering activities with Service Operations.</span></p>
+          </div>
+        </article>
+
+        <article class="stage lead split">
+          <span class="node"></span>
+          <span class="when">APR 2019 — JUN 2025</span>
+          <h3>Bally's Interactive</h3>
+          <p class="org">Formerly JackpotJoy Group / Gamesys</p>
+          <div class="roles">
+            <div class="role">
+              <span class="promo" title="Promotion"></span>
+              <h4>Head of Quality Assurance – Asia &amp; ROW <span class="when">MAR 2020 — JUN 2025</span></h4>
+              <ul class="points">
+                <li>Promoted to Head of Quality Assurance following the strategic merger of JackpotJoy Group and Gamesys (subsequently Bally's Interactive) to unify and lead the combined QA organisation.</li>
+                <li>Led a globally distributed team of 17 QA Engineers embedded within Scrum teams across Sweden, Malta, the Philippines, and Hungary, driving strategic alignment and cross-functional support through structured "QA Gatherings" and community-building initiatives.</li>
+                <li>Governed platform-wide Quality Assurance operations across highly scaled, diverse markets in Asia and the rest of the world, including Latin America.</li>
+                <li>Formulated and tracked SMART objectives for all QA personnel, ensuring daily quality activities directly aligned with the overarching corporate VMOST (Vision, Mission, Objectives, Strategy, Tactics) framework.</li>
+                <li>Established a specialised QA Analysis team dedicated to measuring and optimising core engineering metrics, including Lead Time for Changes (LTFC), Change Failure Rate (CFR), and overall Platform Availability.</li>
+                <li>Championed a culture of continuous improvement and performance awareness by implementing data-driven monthly reporting cycles coupled with actionable retrospectives.</li>
+                <li>Authored and enforced the comprehensive Test Strategy, defining the quality standards, tooling, and testing methodologies for the entire engineering department.</li>
+              </ul>
+              <div class="results">
+                <p class="results-tag">Key results</p>
+                <div class="stats">
+                  <div class="stat">
+                    <p class="stat-k">CHANGE FAILURE RATE</p>
+                    <p class="stat-v">12%<span class="arrow">→</span>4%</p>
+                  </div>
+                  <div class="stat">
+                    <p class="stat-k">LEAD TIME FOR CHANGES</p>
+                    <p class="stat-v">4 days<span class="arrow">→</span>&lt;24h</p>
+                  </div>
+                </div>
+                <p class="impact">Slashed enterprise observability costs by 30% by architecting an in-house synthetic test execution engine. This strategic pivot decoupled expensive test execution from Dynatrace, utilising the tool strictly for monitoring and NOC alerting on critical Production user-journeys.</p>
+              </div>
+            </div>
+
+            <div class="role">
+              <span class="promo"></span>
+              <h4>QA Automation Architect <span class="when">APR 2019 — FEB 2020</span></h4>
+              <ul class="points">
+                <li>Led a team of 4 QA Automation Engineers, managing daily workflows and driving system-wide automation efforts through structured Scrum activities.</li>
+                <li>Developed and maintained the core automation infrastructure, utilising Java for backend integration testing and TypeScript for User Acceptance Testing (UAT).</li>
+              </ul>
+              <div class="results">
+                <p class="results-tag">Key results</p>
+                <p class="impact"><span><b>Tech stack:</b> introduced TypeScript into the platform's test automation, modernising how tests were written and maintained.</span></p>
+                <p class="impact"><span><b>Ways of working:</b> embedded Behaviour-Driven Development (BDD) into the Scrum team's day-to-day practices.</span></p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="stage lead">
+          <span class="node"></span>
+          <span class="when">NOV 2016 — APR 2019</span>
+          <h3>Senior Software Developer in Test</h3>
+          <p class="org"><b>Gaming Innovation Group</b> · Sportsbook</p>
+          <ul class="points">
+            <li>Led all Quality Assurance initiatives for Sportsbook ventures within a dedicated Scrum team.</li>
+            <li>Automated Sportsbook test scenarios using BDD, developing UATs in TypeScript and integration tests in C#.</li>
+            <li>Managed incident triage and resolution for all live Production issues on the Sportsbook platform.</li>
+            <li>Trained and mentored team members to build comprehensive Sportsbook domain knowledge.</li>
+            <li>Maintained the Test Environment and managed the team’s CI pipeline.</li>
+          </ul>
+        </article>
+
+        <article class="stage">
+          <span class="node"></span>
+          <span class="when">MAY 2015 — NOV 2016</span>
+          <h3>QA Automation Senior Executive</h3>
+          <p class="org"><b>Vodafone Malta</b></p>
+          <ul class="points">
+            <li>Served as Interim Team Lead for one year, leading the QA Automation team's daily operations and deliverables.</li>
+            <li>Modernised the prepaid card testing ecosystem by rewriting an audit-certified depletion tool from VB.NET 6 to Java, and engineering a new Automatic Voice Depletion system from scratch to execute two-way communication test runs.</li>
+            <li>Developed and maintained the core Java-based UAT Framework.</li>
+            <li>Executed stress and performance testing to identify system bottlenecks and determine application capacity limits.</li>
+          </ul>
+        </article>
+
+        <article class="stage">
+          <span class="node"></span>
+          <span class="when">DEC 2013 — MAY 2015</span>
+          <h3>QA Analyst</h3>
+          <p class="org"><b>DNXCORP</b></p>
+          <ul class="points">
+            <li>Optimised a bespoke automation framework to uncover defects and drive feature enhancements across multiple entertainment portals.</li>
+            <li>Transformed the software delivery pipeline by embedding QA directly into the release flow, ensuring comprehensive testing from code commit through to deployment.</li>
+          </ul>
+        </article>
+
+        <article class="stage">
+          <span class="node"></span>
+          <span class="when">MAY 2009 — DEC 2013</span>
+          <h3>GFI Software</h3>
+          <p class="org">GFI FaxMaker</p>
+          <div class="roles">
+            <div class="role">
+              <span class="promo" title="Promotion"></span>
+              <h4>Senior Software Tester <span class="when">MAY 2012 — DEC 2013</span></h4>
+              <ul class="points">
+                <li>Promoted to Senior Software Tester to lead advanced testing initiatives and mentor junior QA Engineers.</li>
+                <li>Managed technical partnerships and integration alignment with major telecom hardware manufacturers, including U.S. Robotics and MultiTech.</li>
+                <li>Authored and analysed comprehensive performance reports, delivering data-driven insights to optimise system stability.</li>
+              </ul>
+            </div>
+            <div class="role">
+              <span class="promo"></span>
+              <h4>Software Tester <span class="when">MAY 2009 — MAY 2012</span></h4>
+              <ul class="points">
+                <li>Configured and maintained complex test environments (including ISDN/CAPI cards and GSM/COM modems), driving integration certification for all supported hardware.</li>
+                <li>Executed rigorous C++ performance testing to identify memory leaks, and led root-cause analysis for any pre-release deployment failures.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <p class="earlier-mark">// earlier</p>
+
+        <article class="stage compact">
+          <span class="node"></span>
+          <span class="when">SEP 2007 — MAY 2009</span>
+          <h3>Datacenter Technician</h3>
+          <p class="org"><b>BMIT Support Services</b></p>
+          <ul class="points">
+            <li>Deployed and configured enterprise data centre infrastructure (HP/Dell servers, Cisco/Juniper networking, SAN) for high-traffic iGaming clients, managing network stability and upstream technical escalations.</li>
+          </ul>
+        </article>
+
+        <article class="stage compact">
+          <span class="node"></span>
+          <span class="when">NOV 2005 — SEP 2007</span>
+          <h3>Data Help Desk Technician</h3>
+          <p class="org"><b>Melita Plc</b></p>
+          <ul class="points">
+            <li>Delivered Tier 1 technical support, diagnosing and resolving network connectivity issues for residential ISP clients.</li>
+          </ul>
+        </article>
+
+      </div>
+    </main>
+
+    <aside>
+      <section>
+        <h2 class="label">// stack</h2>
+        <p class="sublabel">programming</p>
+        <ul class="skills">
+          <li>Java <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></li>
+          <li>TypeScript <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></li>
+          <li>C# <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></li>
+          <li>Python <span class="meter"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></li>
+        </ul>
+        <p class="sublabel">testing &amp; performance</p>
+        <ul class="skills">
+          <li>k6 <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></li>
+          <li>Allure <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></li>
+        </ul>
+        <p class="sublabel">data &amp; observability</p>
+        <ul class="skills">
+          <li>Metabase <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></li>
+          <li>Grafana <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></li>
+          <li>MySQL <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></li>
+        </ul>
+        <p class="sublabel">web</p>
+        <ul class="skills">
+          <li>HTML <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></li>
+          <li>CSS <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></li>
+        </ul>
+        <p class="sublabel">ai tooling</p>
+        <ul class="skills">
+          <li>Claude <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></li>
+          <li>Gemini <span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="label">// soft skills</h2>
+        <div class="chips">
+          <span>Strategic Stakeholder Management</span><span>Global Team Leadership &amp; Mentorship</span><span>Change Management &amp; Agile Adaptation</span><span>Empathetic &amp; Human-Centric Leadership</span><span>Vendor &amp; Contract Negotiation</span><span>Cross-Functional Alignment</span><span>Data-Driven Problem Solving</span><span>Delivery &amp; Capacity Planning</span>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="label">// languages</h2>
+        <ul class="langs">
+          <li><span>Maltese<small>Native</small></span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></li>
+          <li><span>English<small>Advanced</small></span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></li>
+          <li><span>Italian<small>Intermediate</small></span><span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></li>
+        </ul>
+      </section>
+
+      <section class="page-break">
+        <h2 class="label">// education</h2>
+        <ul class="edu">
+          <li><b>Certificate in Ethical Hacking</b><span>STC Pembroke · May 2012</span></li>
+          <li><b>CCNA – Cisco Certified Network Associate</b><span>Clear Dimensions · 2008 – 2009 (lapsed)</span></li>
+          <li><b>Edexcel National Diploma in Telecommunications &amp; Electronics Engineering</b><span>Mikelang Sapiano Technical Institute / MCAST · 2001 – 2005</span></li>
+          <li><b>DipLCM in Concert Acoustic Guitar Performance &amp; Improvisation</b><span>London College of Music · 2018 – present (Grade 5 held)</span></li>
+          <li><b>DipMusLCM in Music Literacy</b><span>London College of Music · 2023 – present</span></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="label">// references</h2>
+        <ul class="refs">
+          <li><b>Available on request</b></li>
+        </ul>
+      </section>
+      <section class="offduty">
+    <h2 class="label">// hobbies &amp; interests</h2>
+    <ul class="hobbies">
+      <li class="hobby">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="15" r="5"/><circle cx="9" cy="15" r="1.5"/><path d="M12.5 11.5 20 4M18 2l4 4"/></svg>
+        <div><b>Playing guitar</b><span>Pursuing a London College of Music diploma, one scale at a time. The neighbours haven’t triggered a High Severity noise complaint yet.</span></div>
+      </li>
+      <li class="hobby">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r=".6"/></svg>
+        <div><b>Crate-digging for rare vinyl</b><span>Basically manual exploratory testing for physical media. It is the only time I will gladly pay a premium for a product with known defects (scratches) and undocumented features (hidden tracks).</span></div>
+      </li>
+      <li class="hobby">
+        <svg viewBox="0 0 24 24"><path d="M3 12h18a9 9 0 0 1-18 0z"/><path d="M14 3l-4 7M19 4l-6 6"/></svg>
+        <div><b>Cooking "impossible" Asian dishes</b><span>Every recipe is a test case that spectacularly fails its first run. The hotfixes get deployed the following weekend.</span></div>
+      </li>
+      <li class="hobby">
+        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="15.5" cy="11.5" r=".9"/><circle cx="18" cy="13.5" r=".9"/></svg>
+        <div><b>Gaming</b><span>Everything from SNES to Roblox with my kids. They find the bugs faster than I do, but flat-out refuse to log the Jira tickets.</span></div>
+      </li>
+      <li class="hobby">
+        <svg viewBox="0 0 24 24"><path d="M2 18h20M5 18a7 7 0 0 1 14 0"/><path d="M12 4v3M4.9 8.9l2.1 2.1M19.1 8.9 17 11"/></svg>
+        <div><b>Morning walks</b><span>A football injury permanently reduced my sprint velocity. I now rely on a steady, one-hour daily walk to keep my physical burndown chart on track.</span></div>
+      </li>
+    </ul>
+      </section>
+    </aside>
+  </div>
+
+</div>
+</body>
+</html>
